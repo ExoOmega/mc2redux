@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -12,26 +11,47 @@ public class GameManager : MonoBehaviour {
     public GameObject CameraMover;
     public float cameraSpeed = 0.3f;
 
+    bool isSelecting = false;
+    Vector3 mousePosition1;
+
     // Update is called once per frame
     void Update()
     {
         if (!overUIElement)
             HandleSelection();
 
-        bool hasUnit = selectedUnit;
+        //bool hasUnit = selectedUnit;
         //unitControls.SetActive(hasUnit);
 
         HandleCameraMovement();
     }
+    void OnGUI()
+    {
+        if (isSelecting)
+        {
+            // Create a rect from both mouse positions
+            var rect = UnitSelectionBox.GetScreenRect(mousePosition1, Input.mousePosition);
+            UnitSelectionBox.DrawScreenRect(rect, new Color(0.8f, 0.8f, 0.95f, 0.25f));
+            UnitSelectionBox.DrawScreenRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
+        }
+    }
 
     void HandleSelection()
     {
+        // If we press the left mouse button, save mouse location and begin selection
+        if (Input.GetButtonDown("Select"))
+        {
+            isSelecting = true;
+            mousePosition1 = Input.mousePosition;
+        }
+        // If we let go of the left mouse button, end selection
         if (Input.GetButtonUp("Select"))
         {
+            isSelecting = false;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit, 100))
+            if (Physics.Raycast(ray, out hit, 100))
             {
                 CheckHit(hit);
             }
@@ -42,8 +62,9 @@ public class GameManager : MonoBehaviour {
     {
         float hor = Input.GetAxis("Horizontal");
         float vert = Input.GetAxis("Vertical");
+        float zoom = Input.GetAxis("Mouse ScrollWheel") * 30;
 
-        Vector3 newPos = new Vector3(hor, 0, vert) * cameraSpeed;
+        Vector3 newPos = new Vector3(hor, zoom, vert) * cameraSpeed;
         CameraMover.transform.position += newPos;
     }
 
@@ -117,5 +138,18 @@ public class GameManager : MonoBehaviour {
             selectedUnit.run = false;
             selectedUnit.crouch = !selectedUnit.crouch;
         }
+    }
+       
+    public bool IsWithinSelectionBounds(GameObject gameObject)
+    {
+        if (!isSelecting)
+            return false;
+
+        var camera = Camera.main;
+        var viewportBounds =
+            UnitSelectionBox.GetViewportBounds(camera, mousePosition1, Input.mousePosition);
+
+        return viewportBounds.Contains(
+            camera.WorldToViewportPoint(gameObject.transform.position));
     }
 }
