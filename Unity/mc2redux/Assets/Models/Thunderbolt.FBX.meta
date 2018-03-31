@@ -30,6 +30,15 @@ ModelImporter:
     100044: Cylinder007
     100046: Cylinder008
     100048: //RootNode
+    100050: node_id10
+    100052: node_id11
+    100054: node_id4
+    100056: node_id5
+    100058: node_id52
+    100060: node_id6
+    100062: node_id7
+    100064: node_id8
+    100066: node_id9
     400000: Box005
     400002: Box006
     400004: Box007
@@ -55,7 +64,24 @@ ModelImporter:
     400044: Cylinder007
     400046: Cylinder008
     400048: //RootNode
+    400050: node_id10
+    400052: node_id11
+    400054: node_id4
+    400056: node_id5
+    400058: node_id52
+    400060: node_id6
+    400062: node_id7
+    400064: node_id8
+    400066: node_id9
     2100000: No Name
+    2100002: Material_34
+    2100004: Material_35
+    2100006: Material_36
+    2100008: Material_37
+    2100010: Material_38
+    2100012: Material_39
+    2100014: Material_40
+    2100016: Material_41
     2300000: Box005
     2300002: Box006
     2300004: Box007
@@ -80,6 +106,14 @@ ModelImporter:
     2300042: Cylinder006
     2300044: Cylinder007
     2300046: Cylinder008
+    2300048: node_id10
+    2300050: node_id11
+    2300052: node_id4
+    2300054: node_id5
+    2300056: node_id6
+    2300058: node_id7
+    2300060: node_id8
+    2300062: node_id9
     3300000: Box005
     3300002: Box006
     3300004: Box007
@@ -104,6 +138,14 @@ ModelImporter:
     3300042: Cylinder006
     3300044: Cylinder007
     3300046: Cylinder008
+    3300048: node_id10
+    3300050: node_id11
+    3300052: node_id4
+    3300054: node_id5
+    3300056: node_id6
+    3300058: node_id7
+    3300060: node_id8
+    3300062: node_id9
     4300000: Cylinder001
     4300002: Cylinder003
     4300004: Cylinder004
@@ -128,10 +170,18 @@ ModelImporter:
     4300042: Box020
     4300044: Box021
     4300046: Box022
+    4300048: node_id4
+    4300050: node_id5
+    4300052: node_id6
+    4300054: node_id7
+    4300056: node_id8
+    4300058: node_id9
+    4300060: node_id10
+    4300062: node_id11
     9500000: //RootNode
   externalObjects: {}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -159,7 +209,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 1000
     meshCompression: 0
     addColliders: 0
     importVisibility: 1

@@ -39,15 +39,18 @@ public class GameManager : MonoBehaviour {
     void HandleSelection()
     {
         // If we press the left mouse button, save mouse location and begin selection
-        if (Input.GetButtonDown("Select"))
+        if (Input.GetButtonDown("RightClick"))
         {
             isSelecting = true;
             mousePosition1 = Input.mousePosition;
         }
         // If we let go of the left mouse button, end selection
-        if (Input.GetButtonUp("Select"))
+        if (Input.GetButtonUp("RightClick"))
         {
             isSelecting = false;
+        }
+        if (Input.GetButtonUp("LeftClick"))
+        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
