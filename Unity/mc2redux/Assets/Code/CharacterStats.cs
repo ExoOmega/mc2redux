@@ -14,8 +14,9 @@ public class CharacterStats : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        plControl = GetComponent<PlayerControl>();	
-	}
+        plControl = GetComponent<PlayerControl>();
+        selectTag = this.gameObject.transform.Find("SelectTag").gameObject;
+    }
 	
 	// Update is called once per frame
 	void Update ()
