@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
@@ -10,19 +8,20 @@ public class CharacterStats : MonoBehaviour
     public int team;
     public bool crouch;
     public bool run;
-    public GameObject selectCude;
+    public GameObject selectTag;
     PlayerControl plControl;
 
 	// Use this for initialization
 	void Start ()
     {
-        plControl = GetComponent<PlayerControl>();	
-	}
+        plControl = GetComponent<PlayerControl>();
+        selectTag = this.gameObject.transform.Find("SelectTag").gameObject;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        selectCude.SetActive(selected);
+        selectTag.SetActive(selected);
 
         if (run)
         {

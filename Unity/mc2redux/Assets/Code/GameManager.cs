@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour {
 
     bool isSelecting = false;
     Vector3 mousePosition1;
+    List<CharacterStats> selectedObjects = new List<CharacterStats>();
 
     // Update is called once per frame
     void Update()
@@ -39,21 +41,45 @@ public class GameManager : MonoBehaviour {
     void HandleSelection()
     {
         // If we press the left mouse button, save mouse location and begin selection
-        if (Input.GetButtonDown("Select"))
+        if (Input.GetButtonDown("RightClick"))
         {
+            selectedObjects = new List<CharacterStats>();
             isSelecting = true;
             mousePosition1 = Input.mousePosition;
+
+            foreach (var selectableObject in FindObjectsOfType<CharacterStats>())
+            {
+                if (selectableObject.team == playerTeam)
+                {
+                    selectableObject.selected = false;
+                }
+            }
         }
         // If we let go of the left mouse button, end selection
-        if (Input.GetButtonUp("Select"))
+        if (Input.GetButtonUp("RightClick"))
         {
+            foreach (var selectableObject in FindObjectsOfType<CharacterStats>())
+            {
+                if (IsWithinSelectionBounds(selectableObject.gameObject))
+                {
+                    selectedObjects.Add(selectableObject);
+                    selectableObject.selected = true;
+                }
+            }
+
             isSelecting = false;
+        }
+        if (Input.GetButtonUp("LeftClick"))
+        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, 100))
             {
-                CheckHit(hit);
+                foreach (var obj in selectedObjects)
+                {
+                    obj.transform.GetComponent<CharacterStats>().MoveToPosition(hit.point);
+                }
             }
         }
     }
@@ -129,15 +155,6 @@ public class GameManager : MonoBehaviour {
     public void ExitUIElement()
     {
         overUIElement = false;
-    }
-
-    public void ChangeStance()
-    {
-        if (selectedUnit)
-        {
-            selectedUnit.run = false;
-            selectedUnit.crouch = !selectedUnit.crouch;
-        }
     }
        
     public bool IsWithinSelectionBounds(GameObject gameObject)
