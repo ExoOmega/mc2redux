@@ -49,10 +49,7 @@ public class GameManager : MonoBehaviour {
 
             foreach (var selectableObject in FindObjectsOfType<CharacterStats>())
             {
-                if (selectableObject.team == playerTeam)
-                {
-                    selectableObject.selected = false;
-                }
+                selectableObject.selected = false;
             }
         }
         // If we let go of the left mouse button, end selection
@@ -62,8 +59,11 @@ public class GameManager : MonoBehaviour {
             {
                 if (IsWithinSelectionBounds(selectableObject.gameObject))
                 {
-                    selectedObjects.Add(selectableObject);
-                    selectableObject.selected = true;
+                    if (selectableObject.team == playerTeam)
+                    {
+                        selectedObjects.Add(selectableObject);
+                        selectableObject.selected = true;
+                    }
                 }
             }
 
@@ -79,6 +79,25 @@ public class GameManager : MonoBehaviour {
                 foreach (var obj in selectedObjects)
                 {
                     obj.transform.GetComponent<CharacterStats>().MoveToPosition(hit.point);
+                }
+            }
+        }
+
+        if (isSelecting)
+        {
+            foreach (var selectableObject in FindObjectsOfType<CharacterStats>())
+            {
+                if (IsWithinSelectionBounds(selectableObject.gameObject))
+                {
+                    if (selectableObject.team == playerTeam)
+                    {
+                        selectedObjects.Add(selectableObject);
+                        selectableObject.selected = true;
+                    }
+                }
+                else
+                {
+                    selectableObject.selected = false;
                 }
             }
         }
