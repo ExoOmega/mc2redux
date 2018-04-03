@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour {
             foreach (var selectableObject in FindObjectsOfType<CharacterStats>())
             {
                 selectableObject.selected = false;
+                selectableObject.enemySelected = false;
             }
         }
         // If we let go of the left mouse button, end selection
@@ -63,6 +64,10 @@ public class GameManager : MonoBehaviour {
                     {
                         selectedObjects.Add(selectableObject);
                         selectableObject.selected = true;
+                    }
+                    else
+                    {
+                        selectableObject.enemySelected = false;
                     }
                 }
             }
@@ -91,13 +96,17 @@ public class GameManager : MonoBehaviour {
                 {
                     if (selectableObject.team == playerTeam)
                     {
-                        selectedObjects.Add(selectableObject);
                         selectableObject.selected = true;
+                    }
+                    else
+                    {
+                        selectableObject.enemySelected = true;
                     }
                 }
                 else
                 {
                     selectableObject.selected = false;
+                    selectableObject.enemySelected = false;
                 }
             }
         }
